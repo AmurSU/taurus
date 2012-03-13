@@ -1,0 +1,44 @@
+%h1 Учебный план группы #{@group.name}
+
+%p На #{TAURUS_CONFIG["semester"]["current"]["title"]} семестр. Специальность: #{@group.speciality.code} «#{@group.speciality.name}»
+
+%table.teaching_plan.infotable.fullwidth-table
+  %thead
+    %tr
+      %th{:rowspan => 2} Дисциплина
+      %th{:rowspan => 2} Часов в неделю
+      - ["Лекции", "Практики", "Лабораторные работы"].each do |typename|
+        %th{:colspan => 3} #{typename}
+      %th{:rowspan => 2} Экзамен/зачёт
+    %tr
+      - 3.times do
+        %th План
+        %th Карта
+        %th Ошибка
+  %tfoot
+    %tr
+      %th Всего
+      %th.numeric-cell= @charge_cards.map{|cc| cc.hours_per_week}.sum
+      - [[1, :lections], [2, :practics], [3, :lab_works]].each do |type|
+        - plan = @teaching_plans.map{|tp| tp[type[1]]}.compact.sum
+        - card = @charge_cards.select{|cc| cc.lesson_type_id == type[0]}.map{|cc| cc.try(:hours_quantity)}.sum
+        - err  = (plan - card).abs unless plan.zero? or card.zero? or (plan - card).abs.zero?
+        %th.numeric-cell= plan unless plan.zero?
+        %th.numeric-cell= card
+        %th.numeric-cell.error-cell= err
+      %th
+  %tbody
+    - @disciplines.each do |discipline|
+      %tr
+        %th= discipline.name
+        - cards = @charge_cards.select{|cc| cc.discipline_id == discipline.id}
+        - plan = @teaching_plans.select{|tp| tp.discipline_id == discipline.id}.first
+        %td.numeric-cell= cards.map{|cc| cc.hours_per_week}.sum
+        - [[1, :lections], [2, :practics], [3, :lab_works]].each do |type|
+          - val  = plan[type[1]] if plan
+          - card = cards.select{|cc| cc.lesson_type_id == type[0]}.first.try(:hours_quantity)
+          - err  = (val - card).abs if val and card and not (val - card).abs.zero?
+          %td.numeric-cell= val
+          %td.numeric-cell= card
+          %td.numeric-cell.error-cell= err
+        %td #{(plan.exam ? "Экзамен" : "Зачёт") if plan}

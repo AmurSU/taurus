@@ -88,6 +88,7 @@ ru:
         faculty: 'Факультет'
         short_name: 'Сокращенное название'
         name: 'Название кафедры'
+        gosinsp_code: 'Код в GosInsp'
       discipline:
         name: 'Название дисциплины'
         short_name: 'Сокращенное название'

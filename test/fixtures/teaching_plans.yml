@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  speciality: 
+  discipline: 
+  course: 1
+  semester: 1
+  lections: 1
+  practics: 1
+  lab_works: 1
+  exam: false
+
+two:
+  speciality: 
+  discipline: 
+  course: 1
+  semester: 1
+  lections: 1
+  practics: 1
+  lab_works: 1
+  exam: false

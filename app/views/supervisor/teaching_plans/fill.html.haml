@@ -1,0 +1,23 @@
+- if @errors and @errors.any?
+  %p При разборе файла плана произошли следующие ошибки:
+  %ol
+    - @errors.each do |err|
+      %li= err
+
+- if @speciality
+  %h1 Внесение учебного плана для специальности #{@speciality.code} «#{@speciality.name}»
+  %p Изменение затронуло следующие группы: #{@speciality.groups.map{|group| group.name}.join(", ")}
+  - if @results.any?
+    %ol
+      - @results.each do |r|
+        %li
+          %p #{r[:discipline].name} (на кафедре #{r[:discipline].department.name})
+          - if r[:semesters].any?
+            %ul
+              - r[:semesters].each do |s|
+                %li
+                  Курс #{s.course}, семестр #{s.semester}:
+                  лекции: #{s.lections or 'нет'},
+                  практики: #{s.practics or 'нет'},
+                  лабораторные: #{s.lab_works or 'нет'},
+                  #{s.exam ? "экзамен" : "зачёт" }

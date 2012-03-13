@@ -11,7 +11,7 @@ class ChargeCard < ActiveRecord::Base
   has_many :groups, :through => :jets
   has_many :pairs, :dependent => :destroy
 
-  validates_presence_of :discipline, :lesson_type, :teaching_place, :weeks_quantity, :hours_per_week
+  validates_presence_of :discipline, :lesson_type, :weeks_quantity, :hours_per_week
   validates_numericality_of :weeks_quantity, :hours_per_week
 
   named_scope :with_recommended_first_for, lambda { |department|
@@ -33,7 +33,7 @@ class ChargeCard < ActiveRecord::Base
   end
 
   def name_for_pair_edit
-    [teaching_place.name, assistant_teaching_place.try(:to_label), name].compact.join(", ")
+    [teaching_place.try(:name), assistant_teaching_place.try(:to_label), name].compact.join(", ")
   end
 
   def hours_quantity
@@ -60,6 +60,24 @@ class ChargeCard < ActiveRecord::Base
   def editor_name_with_recommendation
     recommended = (self.teaching_place.try(:department_id) == @recommended_dept.try(:id))
     "#{editor_name} #{"(рекомендуется)" if recommended}"
+  end
+
+  def self.for_autocreation(discipline_id, lesson_type_id, groups)
+    groups = [groups].flatten # In case of single group make it look like an array
+    pretendents = all(:joins => :jets, :conditions => {
+        :discipline_id => discipline_id,
+        :lesson_type_id => lesson_type_id,
+        :jets => {:group_id => groups}
+      }
+    )
+    pretendents = pretendents.find_all {|cc| cc.groups == groups }
+    if pretendents.empty?
+      return new(:discipline_id => discipline_id, :lesson_type_id => lesson_type_id)
+    else
+      card = pretendents.first
+      card.instance_variable_set("@readonly", false) # Very dirty hack to avoid ActiveRecord::ReadOnlyRecord exception
+      return card
+    end
   end
 
   private

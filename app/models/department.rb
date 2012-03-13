@@ -6,4 +6,7 @@ class Department < ActiveRecord::Base
   has_many :lecturers, :through => :teaching_places
   has_many :specialities
   has_many :dept_heads
+  
+  validates_numericality_of :gosinsp_code, :allow_nil => true
+
 end

@@ -1,0 +1,2 @@
+module Supervisor::TeachingPlansHelper
+end

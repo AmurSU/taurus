@@ -83,6 +83,11 @@ table.infotable td.numeric-cell, table.infotable th.numeric-cell {
   text-align: right;
 }
 
+table.infotable td.error-cell, table.infotable th.error-cell {
+  color: red;
+  font-weight: bold;
+}
+
 table.infotable tr {
   background: white;
   background: rgba(255, 255, 255, 0.3);
@@ -149,4 +154,28 @@ table.infotable.fullwidth-table {
 
 table.infotable tr.hidden {
   display: none;
+}
+
+table.teaching_plan colgroup, table.teaching_plan col {
+  border: 2px solid gray;
+}
+
+table.teaching_plan tbody, table.teaching_plan tfoot, table.teaching_plan thead {
+  border: 2px solid gray;
+}
+
+.active-scaffold tr.record.alien-speciality {
+  background: #EEEEEE;
+}
+
+.active-scaffold tr.record.alien-speciality.even-record {
+  background: #F9F9F9;
+}
+
+.active-scaffold tr.record.alien-speciality td.sorted {
+  background: #E0E0E0;
+}
+
+.active-scaffold tr.record.alien-speciality.even-record td.sorted {
+  background: #EEEEEE;
 }

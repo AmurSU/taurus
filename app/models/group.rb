@@ -58,5 +58,18 @@ class Group < ActiveRecord::Base
   def self.escape_name(name)
     name.to_s.gsub('%', '\%').gsub('_', '\_') + '%'
   end
+
+  protected
+
+  def authorized_for_update?
+    return true unless current_user
+    self.speciality.try(:department_id) == current_user.department_id
+  end
+
+  def authorized_for_delete?
+    return true unless current_user
+    self.speciality.try(:department_id) == current_user.department_id
+  end
+
 end
 

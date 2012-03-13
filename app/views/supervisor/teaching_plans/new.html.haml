@@ -1,0 +1,7 @@
+%h1 Импорт учебных планов
+%p Пожалуйста, обратите внимание, что система принимает к разбору <strong>только</strong> файлы учебных планов <strong><em>универсального</em> пакета GosInsp</strong>.
+%p Это файлы с расширениями <code>PLI.XML</code> и <code>PLM.XML</code>.
+%fieldset
+  - form_tag("/supervisor/teaching_plans/fill", :method => :post, :multipart => true) do
+    = file_field_tag :plan, :accept => "application/xml"
+    = submit_tag "Импортировать"

@@ -1,0 +1,59 @@
+%h1 Учебный план специальности #{@speciality.code} «#{@speciality.name}»
+
+%p Группы: #{@speciality.groups.map{|g| g.name}.join(", ")}
+
+- conditions = {:speciality_id => @speciality.id}
+
+- if @teaching_plans.empty?
+  %p Для данной специальности учебный план ещё не загружен.
+
+- else
+  %table.teaching_plan.infotable.fullwidth-table
+    %colgroup
+    - @courses.each do |course|
+      %colgroup
+        %col{:span => 4}
+        %col{:span => 4}
+    %colgroup
+    %thead
+      %tr
+        %th{:rowspan => 3} Дисциплина
+        - @courses.each do |course|
+          %th{:colspan => 8} Курс #{course}
+        %th{:rowspan => 3} Всего
+      %tr
+        - @courses.each do |course|
+          %th{:colspan => 4} Семестр 1
+          %th{:colspan => 4} Семестр 2
+      %tr
+        - (@courses.count*2).times do |course|
+          - ["Лек", "Прт", "Лаб"].each do |typename|
+            %th #{typename}
+          %th{:rowspan => 3} Экз
+    %tfoot
+      %tr
+        %th Всего
+        - @courses.each do |course|
+          - (1..2).each do |semester|
+            - conditions.merge!({:course => course, :semester => semester})
+            - plans = TeachingPlan.all(:conditions => conditions)
+            %th #{plans.sum{|p| p.lections or 0 } if plans.any?}
+            %th #{plans.sum{|p| p.practics or 0} if plans.any?}
+            %th #{plans.sum{|p| p.lab_works or 0} if plans.any?}
+            %th
+        %th
+    %tbody
+      - @disciplines.each do |discipline|
+        %tr
+          %th= discipline.name
+          - plans = []
+          - @courses.each do |course|
+            - (1..2).each do |semester|
+              - conditions.merge!({:discipline_id => discipline.id, :course => course, :semester => semester})
+              - plan = TeachingPlan.first(:conditions => conditions)
+              - plans << plan if plan
+              %td #{plan.lections if plan}
+              %td #{plan.practics if plan}
+              %td #{plan.lab_works if plan}
+              %td #{(plan.exam ? "Экз" : "Зач") if plan}
+          %th= plans.sum{|p| (p.lections or 0) + (p.practics or 0) + (p.lab_works or 0)} if plans.any?

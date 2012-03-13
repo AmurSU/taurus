@@ -9,6 +9,7 @@ gem "pdfkit"
 gem "pg"
 gem 'whenever'
 gem 'unicode'
+gem 'nokogiri'
 
 group :production do
   gem 'unicorn'

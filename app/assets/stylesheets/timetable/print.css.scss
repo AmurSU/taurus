@@ -1,0 +1,49 @@
+@media print {
+  body.timetable {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  header, nav, footer, .search_box, .ajax_messages_container {
+    display: none;
+  }
+
+  .button {
+    display: none !important;
+  }
+
+  .list_box {
+    margin: 0 !important;
+  }
+
+  .timetablerow {
+    page-break-inside: avoid;
+    height: 70px;
+  }
+
+  th {
+    font-size: 8px;
+    page-break-inside: avoid;
+  }
+
+  .daycellcontainer {
+    height: 72px;
+    margin: -1px;
+    page-break-inside: avoid;
+  }
+
+  .daycell tr {
+    height: 35px;
+    max-height: 35px;
+  }
+
+  .daycell td {
+    font-family: sans-serif;
+    font-size: 7px;
+  }
+
+  .back_button {
+    display: none;
+  }
+
+}

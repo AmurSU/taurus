@@ -1,10 +1,35 @@
 - title "Группы"
 
-.group_name
-  .group_name_label
-    %label{:for => "group_name_input"}
-      =  "Номер группы"
-  .group_name_input_container
-    %input{:class => "group_name_input", :id => "group_name_input"}
-  %div
-    %button{:type => "button"} Показать расписание
+.group_timetable_search
+  .search_box
+    = form_tag(url_for(), :method => "get") do
+      - if @terminal
+        %input{:type => :hidden, :name => :terminal, :value => @terminal}
+      %label{:for => "group_name_input"} Введите номер группы для поиска
+      %input.timetable_input#group_name_input{:autofocus => true, :name => :group, :value => params[:group]}
+      %button{:type => "submit"} >
+    .keyboard
+      - 9.times do |i|
+        .key #{i+1}
+      .key.clear ✖
+      .key 0
+      .key.backspace ⌫
+      - %w(А Б К М О С Э -).each do |letter|
+        .key.group_letter #{letter}
+  .list_box
+    - @groups.each do |group|
+      .group
+        %h2 #{group.name}
+        = link_to "Расписание", timetable_group_path(group), :class => "button link_to_timetable"
+        .desc
+          %p.course #{group.course} курс, #{group.speciality.try(:department).try(:faculty).try(:name)}
+          %p.speciality #{"#{group.speciality.try(:code)} «#{group.speciality.try(:name)}»" if group.speciality}
+
+  .ajax_messages_container
+    .ajax_spinner
+    .ajax_message.ajax_loading Ищем группы по вашему запросу…
+    .ajax_message.ajax_error Произошла ошибка при выполнении запроса. Пожалуйста, попробуйте ещё раз чуть позже.
+    .ajax_message.ajax_not_found Мы не нашли таких групп! Может быть, вы ошиблись при вводе?
+
+  - if @terminal
+    = render "/timetable/terminal_help"

@@ -1,0 +1,46 @@
+<%
+content = <<eos
+'<div class=\"lecturer\">
+  <h2>'+lecturer.name+'</h2>
+  <a href=\"/timetable/lecturers/'+lecturer.id+location.search+'\" class=\"button link_to_timetable\">Расписание</a>
+</div>'
+eos
+content.gsub!(/\n\s*/, "")
+%>
+
+jQuery(document).ready(function($) {
+
+  $('#lecturer_name_input').on('input', function () {
+    $.ajax({
+      url: "/timetable/lecturers.json",
+      data: {lecturer: $(this).val()},
+      dataType: 'json',
+      timeout: 10000,
+      beforeSend: function (jqXHR, settings) {
+        $(".ajax_message").hide();
+        $(".ajax_loading").show();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $(".ajax_error").show();
+      },
+      success: function (data, textStatus, jqXHR) {
+        if (data.length) {
+          $(".list_box").empty();
+          $.each(data, function (i, elem) {
+            lecturer = elem.lecturer;
+            $(<%= content %>).appendTo(".list_box");
+          });
+        } else {
+          $(".ajax_not_found").show();
+        }
+      },
+      complete: function (jqXHR, textStatus) {
+        $(".ajax_spinner").hide();
+        $(".ajax_loading").hide();
+      }
+    });
+  });
+
+  if ($('#lecturer_name_input').val()) $('#lecturer_name_input').trigger('input');
+
+});

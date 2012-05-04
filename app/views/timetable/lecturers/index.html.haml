@@ -1,9 +1,38 @@
 - title "Преподаватели"
 
-.lecturer_name
-  .lecturer_name_label
-    %label{:for => "lecturer_name_input"} ФИО преподавателя
-  .lecturer_name_input_container
-    %input{:class => "lecturer_name_input", :id => "lecturer_name_input"}
-  %div
-    %button{:type => "button"} Показать расписание
+.lecturer_timetable_search
+  .search_box
+    .keyboard
+      .kbd_row.k12
+        - %w(й ц у к е н г ш щ з х ъ).each do |letter|
+          .key.lecturer_letter #{letter}
+      .kbd_row.k11
+        - %w(ф ы в а п р о л д ж э).each do |letter|
+          .key.lecturer_letter #{letter}
+      .kbd_row.k10
+        - %w(я ч с м и т ь б ю .).each do |letter|
+          .key.lecturer_letter #{letter}
+      .kbd_row.k9
+        .key.clear ✖
+        .key.whitespace &nbsp;
+        .key.backspace ⌫
+    = form_tag(url_for(), :method => "get") do
+      - if @terminal
+        %input{:type => :hidden, :name => :terminal, :value => @terminal}
+      %label{:for => "lecturer_name_input"} Введите ФИО преподавателя для поиска:
+      %input.timetable_input#lecturer_name_input{:autofocus => true, :name => :lecturer, :value => params[:lecturer]}
+      %button{:type => "submit"} >
+  .list_box
+    - @lecturers.each do |lecturer|
+      .lecturer
+        %h2 #{lecturer.name}
+        = link_to "Расписание", timetable_lecturer_path(lecturer), :class => "button link_to_timetable"
+
+  .ajax_messages_container
+    .ajax_spinner
+    .ajax_message.ajax_loading Ищем преподавателей по вашему запросу…
+    .ajax_message.ajax_error Произошла ошибка при выполнении запроса. Пожалуйста, попробуйте ещё раз чуть позже.
+    .ajax_message.ajax_not_found Мы не нашли преподавателей в базе! Может быть, вы ошиблись при вводе?
+
+  - if @terminal
+    = render "/timetable/terminal_help"

@@ -1,0 +1,109 @@
+/* Keyboard preferences */
+$key_width: 2em;
+$key_margin: 0.25em;
+$keyboard_width: 12*($key_width+2*$key_margin);
+
+div.lecturer_timetable_search {
+
+  label {
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  .search_box {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 1.2em;
+    padding: 0.5em;
+    position: static;
+    overflow: hidden;
+    top: 49px;
+    width: 100%;
+    z-index: 0;
+    border-bottom: 1px solid silver;
+    background: #F0F0F9;
+    -moz-box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.25);
+    -webkit-box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.25);
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.25);
+    background-image: -o-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: -moz-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: -webkit-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: -ms-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    
+    form {
+      margin-left: $keyboard_width;
+    }
+
+  }
+
+  .keyboard {
+    margin: 0;
+    text-align: center;
+    float: left;
+    width: $keyboard_width;
+
+    .kbd_row {
+      overflow: hidden;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    @for $i from 9 through 12 {
+      .kbd_row.k#{$i} {
+        width: $i*($key_width+2*$key_margin);
+      }
+    }
+
+    .key {
+      float: left;
+      margin: $key_margin - 0.05em; // Strange Opera behaviour fix here
+      width: $key_width;
+      text-align: center;
+      font-size: 1em;
+      font-weight: bold;
+    }
+    
+    .key.backspace, .key.clear {
+      color: maroon !important;
+    }
+    
+    .key.whitespace {
+      width: 6*($key_width+2*$key_margin);
+    }
+    
+    .key.backspace {
+      width: 1.5*$key_width;
+    }
+
+  }
+
+  .list_box {
+    margin: 0;
+
+    .lecturer {
+      padding: 0.5em 1em;
+      border-bottom: 1px dotted silver;
+      clear: both;
+      overflow: hidden;
+
+      h2 {
+        margin: 0;
+        padding: 0.1em 1em 0.1em 0;
+        font-size: 2em;
+        float: left;
+        clear: left;
+      }
+      
+      a.button {
+        display: block;
+        width: 200px;
+        float: right;
+        font-size: 1.5em;
+      }
+      
+    }
+
+  }
+
+}

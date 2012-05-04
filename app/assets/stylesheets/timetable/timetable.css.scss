@@ -1,0 +1,94 @@
+div.timetable {
+  padding: 0.5em;
+
+  table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    background-color: #E9E9F0;
+  }
+
+  col.timecells {
+    width: 10%;
+    max-width: 100px;
+  }
+
+  col.daycells {
+    width: 15%;
+  }
+
+  .nopair {
+    height: 100%;
+    width: 100%;
+  }
+
+  .error_pair {
+    background-color: #FF0000;
+    height: 100%;
+    width: 100%;
+  }
+
+  td, th {
+    padding: 0;
+    border-style: solid;
+    border-width: thin;
+  }
+
+  .timetablerow {
+    height: 150px;
+  }
+
+}
+
+.daycellcontainer {
+  height: 152px;
+  margin: -1px;
+}
+
+.daycell {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+
+  tr {
+    height: 75px;
+    max-height: 75px;
+  }
+
+  td {
+    padding: 1px;
+    width: 50%;
+    font-family: sans-serif;
+    font-size: 11px;
+    background-color: #F9F9FC;
+  }
+
+  td.empty {
+    background-color: #E9E9F0;
+  }
+
+}
+
+.discipline, .auditory {
+  max-height: 2.5em;
+  white-space: normal;
+  overflow: hidden;
+}
+
+.back_button {
+  margin: 0.25em;
+  padding: 0.5em;
+  display: block;
+  font-size: 2em;
+}
+
+#back_button_top {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  z-index: 5;
+  width: 340px;
+  height: 40px;
+  line-height: 15px;
+  font-size: 25px;
+  margin: 0;
+}

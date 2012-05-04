@@ -1,25 +1,18 @@
 - title "Группа #{@group.name}"
 
-.timetable_container
-  - unless @terminal
-    %p{:class => "pdf_link"}
-      = link_to "Загрузить PDF", timetable_group_path(@id, :format => :pdf)
-  - else
-    .back_terminal{:id => "back_terminal_top"}
-  .timetable
-    %table
-      %caption= "Расписание учебных пар группы #{@group.name}"
-      %col.timecells
-      - @days.each do |i|
-        %col.daycells
-      %thead
-        %tr
-          %th.timecell
-          = render :partial => 'day_header', :collection => @days
-      %tbody
-        = render :partial => 'time', :collection => @times
-  - unless @terminal
-    %p{:class => "pdf_link"}
-      = link_to "Назад", timetable_groups_path
-  - else
-    .back_terminal{:id => "back_terminal_bottom"}
+= link_to "Назад", timetable_groups_path, :class => "button back_button", :id => "back_button_top"
+
+.timetable.group_timetable
+  %h2 Расписание учебных пар группы #{@group.name}
+  %table
+    %col.timecells
+    - @days.each do |i|
+      %col.daycells
+    %thead
+      %tr
+        %th.timecell
+        = render :partial => 'day_header', :collection => @days
+    %tbody
+      = render :partial => 'time', :collection => @times
+
+= link_to "Назад", timetable_groups_path, :class => "button back_button", :id => "back_button_bottom"

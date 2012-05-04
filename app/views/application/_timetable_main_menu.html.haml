@@ -1,0 +1,18 @@
+%menu.main_menu
+  %li
+    #{link_to "Группы", timetable_groups_path}
+  %li
+    #{link_to "Преподаватели", timetable_lecturers_path}
+- if @terminal
+  %menu.help_menu
+    %li
+      #{link_to "Помощь", "#"}
+- else
+  %menu.login_menu
+    %li
+      #{link_to "Вход"}
+      %menu
+        %li #{link_to "Войти как зав. кафедрой", new_dept_head_session_path}
+        %li #{link_to "Войти как редактор", new_editor_session_path}
+        %li #{link_to "Войти как супервайзер", new_supervisor_session_path}
+        %li #{link_to "Войти как администратор", new_admin_session_path}

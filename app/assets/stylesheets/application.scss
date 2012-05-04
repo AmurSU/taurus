@@ -2,8 +2,13 @@
 *= require_self
 *= require active_scaffold
 *= require jquery-ui/redmond
-*= require_tree .
+*= require grid
+*= require menu
 */
+
+html {
+  font: normal 14px sans-serif;
+}
 
 .login {
   margin-left: 35%;

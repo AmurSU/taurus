@@ -1,26 +1,19 @@
 - title @lecturer.name
 
-.timetable_container
-  - unless @terminal
-    %p{:class => "pdf_link"}
-      = link_to "Загрузить PDF", timetable_lecturer_path(@id, :format => :pdf)
-  - else
-    .back_terminal{:id => "back_terminal_top"}
-  .timetable{:class => "lecturers"}
-    %table
-      %caption= "#{@lecturer.name}. Расписание учебных пар."
-      %colgroup
-        %col.timecells
-        - 6.times do
-          %col.daycells
-      %thead
-        %tr
-          %th
-          = render :partial => 'day_header', :collection => @days
-      %tbody
-        = render :partial => 'time', :collection => @times
-  - unless @terminal
-    %p{:class => "pdf_link"}
-      = link_to "Назад", timetable_lecturers_path
-  - else
-    .back_terminal{:id => "back_terminal_bottom"}
+= link_to "Назад", timetable_lecturers_path, :class => "button back_button", :id => "back_button_top"
+
+.timetable.lecturer_timetable
+  %h2 #{@lecturer.name}. Расписание учебных пар.
+  %table
+    %colgroup
+      %col.timecells
+      - 6.times do
+        %col.daycells
+    %thead
+      %tr
+        %th
+        = render :partial => 'day_header', :collection => @days
+    %tbody
+      = render :partial => 'time', :collection => @times
+
+= link_to "Назад", timetable_lecturers_path, :class => "button back_button", :id => "back_button_bottom"

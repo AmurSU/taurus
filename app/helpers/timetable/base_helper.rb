@@ -1,0 +1,2 @@
+module Timetable::BaseHelper
+end

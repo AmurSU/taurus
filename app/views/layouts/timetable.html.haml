@@ -4,7 +4,29 @@
     %meta{ :charset=>"utf-8" }
     %title #{yield(:title)} :: Расписание занятий АмГУ :: АС СУР «Taurus»
     = stylesheet_link_tag "timetable", :media => :all
-    %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
-  %body.timetable{ :class => @terminal_index ? 'terminal' : '' }
+    %link{ :rel => "shortcut icon", :href => asset_path("favicon.ico") }
+    %meta{ :name => "viewport", :content => "width=device-width" }
+    /[if lt IE 9]
+      = javascript_include_tag "//html5shiv.googlecode.com/svn/trunk/html5.js"
+      = stylesheet_link_tag "timetable_ie", :media => :all
+  %body.timetable{ :class => @terminal ? 'terminal' : '' }
+    /[if lt IE 9]
+      %p Ваш браузер устарел и правильная работа системы в нём не гарантируется! Пожалуйста, обновите ваш браузер.
+    %header
+      %h1
+        #{link_to image_tag("timetable_logo.png", :alt => "Расписание занятий АмГУ"), url_for(timetable_groups_path)}
+    %nav
+      = render "timetable_main_menu"
     = yield
+    %footer.timetable
+      - if @terminal
+        %p.week_no #{(week_number % 2 != 0) ? "Первая" : "вторая"} неделя
+        %p.time #{I18n.l Time.now, :format => "%H:%M"}
+      - else
+        .today
+          %p Сегодня #{I18n.l Date.today, :format => :long} года.
+          %p.week_no #{(week_number % 2 != 0) ? "Первая" : "вторая"} неделя.
+        .info
+          %p #{link_to "Амурский государственный университет", "//www.amursu.ru"}, 2009—#{Taurus::Version::Date.year}.
+          %p Версия <abbr title="программного обеспечения">#{link_to "ПО", "/about"}</abbr> от #{I18n.l Taurus::Version::Date, :format => :long} года.
     = javascript_include_tag "timetable"

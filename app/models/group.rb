@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
     :message => '- необходимо вводить год целиком. Допустимы годы от 2000 до 2099'
 
   scope :for_timetable, includes(:subgroups => [{:pair => [{:classroom => :building}, { :charge_card => [:discipline, {:teaching_place => [:lecturer, :department]}]}]}])
-  scope :by_name, lambda { |name| where('groups.name LIKE ?', escape_name(name)) }
+  scope :by_name, lambda { |name| where('groups.name ILIKE ?', escape_name(name)) }
   scope :for_groups_editor, includes(:jets => {:subgroups => {:pair => [{:classroom => :building}, { :charge_card => [:discipline, {:teaching_place => [:lecturer, :department]}]}]}})
 
   def course

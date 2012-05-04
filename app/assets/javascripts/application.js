@@ -3,7 +3,7 @@
 //= require active_scaffold
 //= require record_select
 //= require_self
-//= require_tree .
+//= require_tree ./editors
 
 jQuery(document).ready(function($) {
 

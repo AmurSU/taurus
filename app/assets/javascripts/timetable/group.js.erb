@@ -1,0 +1,51 @@
+<%
+content = <<eos
+'<div class=\"group\">
+  <h2>'+group.name+'</h2>
+  <a href=\"/timetable/groups/'+group.id+location.search+'\" class=\"button link_to_timetable\">Расписание</a>
+  <div class=\"desc\">
+    <p class=\"course\">'+group.course+' курс'+(spec ? ', '+spec.department.faculty.name : '')+'</p>
+    <p class=\"speciality\">'+(spec ? spec.code+' «'+ spec.name+'»' : '')+'</p>
+  </div>
+</div>'
+eos
+content.gsub!(/\n\s*/, "")
+%>
+
+jQuery(document).ready(function($) {
+
+  $('#group_name_input').on('input', function () {
+    $.ajax({
+      url: "/timetable/groups.json",
+      data: {group: $(this).val()},
+      dataType: 'json',
+      timeout: 10000,
+      beforeSend: function (jqXHR, settings) {
+        $(".ajax_message").hide();
+        $(".ajax_loading").show();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $(".ajax_error").show();
+      },
+      success: function (data, textStatus, jqXHR) {
+        if (data.length) {
+          $(".list_box").empty();
+          $.each(data, function (i, elem) {
+            group = elem.group;
+            spec = group.speciality;
+            $(<%= content %>).appendTo(".list_box");
+          });
+        } else {
+          $(".ajax_not_found").show();
+        }
+      },
+      complete: function (jqXHR, textStatus) {
+        $(".ajax_spinner").hide();
+        $(".ajax_loading").hide();
+      }
+    });
+  });
+
+  if ($('#group_name_input').val()) $('#group_name_input').trigger('input');
+
+});

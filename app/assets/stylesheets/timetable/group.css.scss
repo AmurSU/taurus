@@ -1,0 +1,97 @@
+div.group_timetable_search {
+
+  label {
+    display: block;
+  }
+
+  .search_box {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 1em 1em 0;
+    width: 350px;
+    position: fixed;
+    top: 49px;
+    bottom: 90px;
+    z-index: 2;
+    border-right: 1px solid silver;
+    background: #F0F0F9;
+    -moz-box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.25);
+    -webkit-box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.25);
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.25);
+    background-image: -o-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: -moz-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: -webkit-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: -ms-linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+    background-image: linear-gradient(top, #dfdfe6 0%, #F0F0F9 50%, #dfdfe6 100%);
+  }
+
+  .keyboard {
+    margin: 0 -5%;
+
+    .key {
+      float: left;
+      margin: 4%;
+      padding: 5% 2%;
+      width: 25.3%;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .key.group_letter {
+      width: 17%;
+      padding: 4% 2%;
+      font-size: 1.2em;
+    }
+    
+    .key.backspace, .key.clear {
+      color: maroon !important;
+    }
+
+  }
+
+  .list_box {
+    margin: 0 0 0 350px;
+
+    .group {
+      padding: 0.5em 1em;
+      border-bottom: 1px dotted silver;
+      clear: both;
+      overflow: hidden;
+
+      h2 {
+        margin: 0;
+        padding: 0.1em 1em 0.1em 0;
+        font-size: 2em;
+        float: left;
+        clear: left;
+        width: 150px;
+      }
+
+      .desc {
+        color: gray;
+        min-height: 2.5em;
+        overflow: hidden;
+        
+        p {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+      
+      a.button {
+        display: block;
+        width: 200px;
+        float: right;
+        font-size: 1.5em;
+      }
+      
+    }
+
+  }
+
+  .ajax_messages_container {
+    padding-left: 350px;
+  }
+}

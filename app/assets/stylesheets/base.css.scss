@@ -1,0 +1,23 @@
+a {
+
+  &:link, &:visited {
+    text-decoration: none;
+  }
+
+  &:link {
+    color: navy;
+  }
+
+  &:visited {
+    color: purple;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: red;
+  }
+
+}

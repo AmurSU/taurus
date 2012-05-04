@@ -1,7 +1,6 @@
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
-//= require jquery.keyboard
-//= require group
-//= require lecturer
-//= require terminal
+//= require timetable/timetable
+//= require timetable/group
+//= require timetable/lecturer
+//= require timetable/terminal

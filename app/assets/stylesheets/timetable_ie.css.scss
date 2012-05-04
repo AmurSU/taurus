@@ -1,0 +1,173 @@
+body.timetable {
+  padding: 0;
+
+  header, nav, footer {
+    position: static;
+    background: #F0F0F9;
+  }
+  
+  header {
+    display: none;
+  }
+  
+  nav {
+    padding: 0;
+    height: auto;
+
+    menu.login_menu {
+      display: none;
+    }
+
+    menu {
+      float: none !important;
+    }
+
+    li {
+      list-style: none;
+      float: left;
+      width: 200px;
+      height: 50px;
+      line-height: 40px;
+      font-size: 1em;
+    }
+  }
+
+  #back_button_top {
+    position: static;
+    margin: 0.5em auto -0.5em;
+  }    
+
+  footer {
+    height: auto;
+
+    .week_no {
+      font-size: 2em;
+    }
+
+    .today {
+      float: none;
+    }
+
+    .info {
+      position: static;
+      text-align: left;
+      float: none;
+    }
+
+  }
+
+  div.ajax_messages_container {
+    position: absolute;
+    bottom: 0;
+    padding: 0;
+  }
+
+  div.group_timetable_search {
+    margin: 0;
+
+    .search_box {
+      position: static;
+      background: #F0F0F9;
+      margin: 0;
+      width: auto;
+      padding: 0.5em;
+
+      .timetable_input {
+        font-size: 1.5em;
+        height: 2em;
+        padding: 0.1em;
+        position: relative; // For displaying in IE7
+      }
+
+      button {
+        font-size: 1.5em;
+        padding: 0.1em;
+        height: 2em;
+        width: 15%;
+      }
+
+    }
+
+    .keyboard {
+      display: none;
+    }
+
+    .list_box {
+      margin: 0;
+      overflow: hidden;
+
+      .group {
+
+        h2 {
+          width: auto;
+        }
+
+        a.button {
+          width: auto;
+        }
+
+        .desc {
+          display: none;
+        }
+
+      }
+
+    }
+
+  }
+
+  div.lecturer_timetable_search {
+
+    .search_box {
+      position: static;
+      margin: 0;
+      width: auto;
+      padding: 0.5em;
+
+      form {
+        margin: 0;
+        font-size: 0.8em;
+        
+        label {
+          margin: 0;
+        }
+      }
+
+      .timetable_input {
+        font-size: 1.5em;
+        height: auto;
+      }
+
+      button {
+        font-size: 1.5em;
+        height: auto;
+      }
+
+    }
+
+    .keyboard {
+      display: none;
+    }
+
+    .list_box {
+      margin: 0;
+      overflow: hidden;
+
+      .lecturer {
+
+        h2 {
+          font-size: 1em;
+        }
+
+        a.button {
+          width: auto;
+          font-size: 1em;
+        }
+
+      }
+
+    }
+
+  }
+
+}

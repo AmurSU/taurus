@@ -1,0 +1,20 @@
+#terminal_help {
+  display: none;
+  position: fixed;
+  top: 100px;
+  left: 50px;
+  right: 50px;
+  border: 2px solid gray;
+  border-radius: 15px;
+  z-index: 10;
+  background: #F0F0F9;
+  box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.25);
+
+  .help_box {
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+    padding: 1em;
+  }
+
+}

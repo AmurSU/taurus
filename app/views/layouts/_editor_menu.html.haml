@@ -6,7 +6,7 @@
     %li #{ link_to 'Листы расписания', new_editor_reference_groups_list_path }
     %li #{ link_to 'Карты нагрузки', editor_reference_departments_path }
     %li #{ link_to 'Выход', destroy_editor_session_path, :class => "red", :method => :delete }
-    %li.semester Семестр: #{TAURUS_CONFIG["semester"]["current"]["title"]}. #{link_to 'Сменить', TAURUS_CONFIG["semester"]["other"]["link"]+"editor"}.
+    %li.semester= render 'change_semester'
 
 - if params[:controller].include? "teaching_plans" or params[:controller].include? "departments"
   .submenu

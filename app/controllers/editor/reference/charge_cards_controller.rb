@@ -7,4 +7,9 @@ class Editor::Reference::ChargeCardsController < Editor::BaseController
     config.columns[:discipline].clear_link
     config.columns[:groups].clear_link
   end
+
+  def conditions_for_collection
+    {:semester_id => current_semester.id}
+  end
+
 end

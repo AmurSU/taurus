@@ -32,7 +32,7 @@ class DeptHead::SpecialitiesController < DeptHead::BaseController
     @speciality = Speciality.find(params[:id])
     discipline_ids = current_dept_head.department.disciplines.select("id").map{|d| d.id}
     to_remove_ids = @speciality.groups.map{|g| g.jets}.flatten.map{|j| j.charge_card_id}.uniq
-    @cards_to_remove = ChargeCard.where(:id => to_remove_ids, :discipline_id => discipline_ids).count
+    @cards_to_remove = ChargeCard.where(:id => to_remove_ids, :discipline_id => discipline_ids, :semester_id => current_semester).count
   end
 
   def create_charge_cards
@@ -41,17 +41,17 @@ class DeptHead::SpecialitiesController < DeptHead::BaseController
     conditions = {:speciality_id => @speciality.id, :discipline_id => discipline_ids}
     if params[:remove]
       ids = @speciality.groups.map{|g| g.jets}.flatten.map{|j| j.charge_card_id}.uniq
-      deleted = (ChargeCard.destroy_all(:id => ids, :discipline_id => discipline_ids)).count
+      deleted = (ChargeCard.destroy_all(:id => ids, :discipline_id => discipline_ids, :semester_id => current_semester)).count
     end
     created = 0
     @courses = TeachingPlan.where(:speciality_id => @speciality.id).select("DISTINCT(course)").map{|p| p.course}.sort
     @courses.each do |course|
-      groups = @speciality.groups.select{|g| g.course == course}
+      groups = @speciality.groups.select{|g| g.course_in(current_semester) == course}
       if groups.any?
-        conditions.merge!({:course => course, :semester => TAURUS_CONFIG["semester"]["current"]["number"]})
+        conditions.merge!({:course => course, :semester => current_semester.number})
         plans = TeachingPlan.where(conditions).all
         plans.each do |plan|
-          created += (plan.create_charge_cards_for(groups)).count
+          created += (plan.create_charge_cards_for(groups, current_semester)).count
         end
       end
     end
@@ -69,7 +69,7 @@ class DeptHead::SpecialitiesController < DeptHead::BaseController
   def conditions_for_collection
     if dept = current_dept_head.department
       discipline_ids = current_dept_head.department.disciplines.all(:select => "id").map{|d| d.id}
-      conditions = {:discipline_id => discipline_ids, :semester => TAURUS_CONFIG["semester"]["current"]["number"]}
+      conditions = {:discipline_id => discipline_ids, :semester => current_semester.number}
       ids = TeachingPlan.all(:conditions => conditions, :select => "DISTINCT(speciality_id)").map{ |tp| tp.speciality_id }
       ["department_id = :department_id OR id IN (:id)", {:department_id => dept.id, :id => ids }]
     else

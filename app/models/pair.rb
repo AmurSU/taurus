@@ -10,6 +10,12 @@ class Pair < ActiveRecord::Base
   validate :expiration_date_validness, :activation_date_validness
   validate :week_number_existance
 
+  scope :in_semester, lambda { |semester| where('("pairs"."expired_at" >= ? AND "pairs"."expired_at" <= ?) OR ("pairs"."active_at" >= ? AND "pairs"."active_at" <= ?)', semester.start, semester.end, semester.start, semester.end) }
+
+  def in_semester?(semester)
+    (active_at >= semester.start and active_at <= semester.end) or (expired_at >= semester.start and expired_at <= semester.end)
+  end
+
   def name
     [lecturer, full_discipline, "ауд: #{classroom.try(:full_name)}", timeslot, groups_string].compact.select{ |e| e != ''}.join(', ')
   end
@@ -99,13 +105,6 @@ class Pair < ActiveRecord::Base
   
   def max_subgroups
     self.charge_card.jets.max_by { |jet| jet.subgroups_quantity }.subgroups_quantity
-  end
-
-  def guess_expire_date
-    year = Date.today.month > 11 ? Date.today.year+1 : Date.today.year
-    month = Date.today.month > 5 ? ( Date.today.month > 11 ? 6 : 12 ) : 5
-    day = month == 6 ? 30 : 31
-    self.expired_at = Date.new(year, month, day)
   end
   
   private

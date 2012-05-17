@@ -4,10 +4,10 @@
     %li #{ link_to 'Дисциплины', dept_head_disciplines_path }
     %li #{ link_to 'Специальности', dept_head_specialities_path }
     %li #{ link_to 'Выход', destroy_dept_head_session_path, :class => "red", :method => :delete }
-    %li.semester Семестр: #{TAURUS_CONFIG["semester"]["current"]["title"]}. #{link_to 'Сменить', TAURUS_CONFIG["semester"]["other"]["link"]+"dept_head"}.
+    %li.semester= render 'change_semester'
     
 .info
   %p<
     Пожалуйста, ознакомьтесь с <a href="/doc/Инструкция по внесению карт нагрузок преподавателей.doc">инструкцией по заполнению карт нагрузок преподавателей</a>.
   %p<
-    <strong>Внимание!</strong> Вы заполняете карточки нагрузки на #{TAURUS_CONFIG["semester"]["current"]["title"]} семестр. Перейти на #{link_to TAURUS_CONFIG["semester"]["other"]["title"]+" семестр", TAURUS_CONFIG["semester"]["other"]["link"]+"dept_head"}?
+    <strong>Внимание!</strong> Вы заполняете карточки нагрузки на #{current_semester}!

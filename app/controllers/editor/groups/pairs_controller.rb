@@ -9,8 +9,8 @@ class Editor::Groups::PairsController < ApplicationController
     pair_params << nil
     @group = Group.find(params[:group_id])
     @pair = Pair.find_or_initialize_by_week_and_day_of_the_week_and_pair_number_and_classroom_id(*pair_params)
-    @pair.active_at = Date.today
-    @pair.guess_expire_date
+    @pair.active_at = current_semester.start
+    @pair.expired_at = current_semester.end
     unless @pair.save
       conflict_params = [params[:day_of_the_week], params[:pair_number], nil]
       pairs = Pair.find_all_by_day_of_the_week_and_pair_number_and_classroom_id(*conflict_params)

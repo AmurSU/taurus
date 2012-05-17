@@ -1,6 +1,9 @@
 %h1 Учебный план специальности #{@speciality.code} «#{@speciality.name}»
 
-%p Группы: #{@speciality.groups.map{|g| g.name}.join(", ")}
+%p Группы: 
+%ul
+  - @speciality.groups.each do |group|
+    %li <strong>#{group.name}</strong>, #{group.course} курс, #{group.population or "(не указано)"} человек
 
 - conditions = {:speciality_id => @speciality.id}
 

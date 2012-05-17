@@ -5,6 +5,7 @@
     %li #{ link_to 'Группы', supervisor_groups_path }
     %li #{ link_to 'Преподаватели', supervisor_lecturers_path }
     %li #{ link_to 'Аудитории', supervisor_classrooms_path }
+    %li #{ link_to 'Семестры', supervisor_semesters_path }
     %li #{ link_to 'Импорт учёбных планов', {:controller => "supervisor/teaching_plans", :action => "new"}  }
     %li #{ link_to 'Выход', destroy_supervisor_session_path, :class => "red", :method => :delete }
-    %li.semester Семестр: #{TAURUS_CONFIG["semester"]["current"]["title"]}. #{link_to 'Сменить', TAURUS_CONFIG["semester"]["other"]["link"]+"supervisor"}.
+    %li.semester= render 'change_semester'

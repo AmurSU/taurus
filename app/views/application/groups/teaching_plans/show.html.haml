@@ -1,6 +1,6 @@
 %h1 Учебный план группы #{@group.name}
 
-%p На #{TAURUS_CONFIG["semester"]["current"]["title"]} семестр. Специальность: #{@group.speciality.code} «#{@group.speciality.name}»
+%p На #{current_semester}. Специальность: #{@group.speciality.code} «#{@group.speciality.name}»
 
 %table.teaching_plan.infotable.fullwidth-table
   %thead

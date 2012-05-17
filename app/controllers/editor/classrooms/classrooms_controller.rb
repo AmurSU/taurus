@@ -21,7 +21,7 @@ class Editor::Classrooms::ClassroomsController < Editor::BaseController
     unless @classroom
       flash[:error] = 'Нет аудитории с таким названием'
     else
-      @pairs = @classroom.pairs.sort_by {|pair| pair.active_at}
+      @pairs = @classroom.pairs.in_semester(current_semester).order("active_at ASC")
       grids = YAML.load(cookies[:classrooms])
       grids << @classroom.id
       cookies[:classrooms] = YAML.dump(grids)

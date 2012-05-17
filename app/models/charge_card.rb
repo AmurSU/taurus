@@ -2,6 +2,7 @@ class ChargeCard < ActiveRecord::Base
   before_update :remove_pairs
   after_save :update_editor_name
 
+  belongs_to :semester
   belongs_to :discipline
   belongs_to :teaching_place
   belongs_to :assistant_teaching_place, :class_name => "TeachingPlace", :foreign_key => "assistant_id"
@@ -16,7 +17,7 @@ class ChargeCard < ActiveRecord::Base
 
   scope :with_recommended_first_for, lambda { |department|
     if department.class == Department
-      joins(:teaching_place).order("teaching_places.department_id = #{department.id} DESC NULLS LAST, charge_cards.editor_name ASC")
+      includes(:teaching_place).order("teaching_places.department_id = #{department.id} DESC NULLS LAST, charge_cards.editor_name ASC")
     end
   }
 
@@ -59,16 +60,17 @@ class ChargeCard < ActiveRecord::Base
     "#{editor_name} #{"(рекомендуется)" if recommended}"
   end
 
-  def self.for_autocreation(discipline_id, lesson_type_id, groups)
+  def self.for_autocreation(discipline_id, lesson_type_id, groups, semester)
     groups = [groups].flatten # In case of single group make it look like an array
     pretendents = joins(:jets).where(
         :discipline_id => discipline_id,
         :lesson_type_id => lesson_type_id,
-        :jets => {:group_id => groups}
+        :jets => {:group_id => groups},
+        :semester_id => semester.id
     ).all
     pretendents = pretendents.find_all {|cc| cc.groups == groups }
     if pretendents.empty?
-      return new(:discipline_id => discipline_id, :lesson_type_id => lesson_type_id)
+      return new(:discipline_id => discipline_id, :lesson_type_id => lesson_type_id, :semester_id => semester.id)
     else
       card = pretendents.first
       card.instance_variable_set("@readonly", false) # Very dirty hack to avoid ActiveRecord::ReadOnlyRecord exception

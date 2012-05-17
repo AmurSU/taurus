@@ -1,0 +1,2 @@
+module Supervisor::SemestersHelper
+end

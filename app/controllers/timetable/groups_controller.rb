@@ -30,7 +30,7 @@ class Timetable::GroupsController < Timetable::BaseController
       @days = Timetable.days
       @times = Timetable.times
       @weeks = Timetable.weeks
-      @pairs = @group.get_pairs
+      @pairs = @group.get_pairs(current_semester)
     end
   end
 end

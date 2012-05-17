@@ -1,0 +1,3 @@
+= form_tag '/semesters/change', :method => 'post' do |f|
+  = select_tag :semester_id, options_for_select(Semester.all.map { |s| [s, s.id] }, current_semester.id), :class => :semester_change
+  <button type="submit">Сменить</button>

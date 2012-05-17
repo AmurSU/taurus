@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120304231053) do
+ActiveRecord::Schema.define(:version => 20120513111229) do
 
   create_table "buildings", :force => true do |t|
     t.string   "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20120304231053) do
     t.integer  "weeks_quantity"
     t.integer  "assistant_id"
     t.string   "editor_name"
+    t.integer  "semester_id"
   end
 
   create_table "classrooms", :force => true do |t|
@@ -113,6 +114,20 @@ ActiveRecord::Schema.define(:version => 20120304231053) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "semesters", :force => true do |t|
+    t.integer  "year",                          :null => false
+    t.integer  "number",                        :null => false
+    t.boolean  "full_time",  :default => true,  :null => false
+    t.date     "start"
+    t.date     "end"
+    t.boolean  "open",       :default => false, :null => false
+    t.boolean  "freezed",    :default => false, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "semesters", ["year", "number", "full_time"], :name => "index_semesters_on_year_and_number_and_full_time", :unique => true
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false

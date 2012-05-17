@@ -31,7 +31,7 @@ class Timetable::LecturersController < Timetable::BaseController
       
       pairs = Array.new
       charge_cards.each do |card|
-        pairs << card.pairs(:include => :subgroups)
+        pairs << card.pairs.includes(:subgroups).in_semester(current_semester)
       end
       pairs = pairs.flatten
       @days = Timetable.days

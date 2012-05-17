@@ -10,6 +10,10 @@ Taurus::Application.routes.draw do
     root :to => redirect('/timetable/groups')
   end
 
+##### Общее #####
+
+post 'semesters/change' => 'application#set_current_semester'
+
 ##### Редакторский раздел #####
 
   namespace :editor do
@@ -105,6 +109,7 @@ Taurus::Application.routes.draw do
     resources :classrooms do as_routes end
     resources :lecturers do as_routes end
     resources :departments do as_routes end
+    resources :semesters do as_routes end
     get 'teaching_plans' => 'teaching_plans#new'
     post 'teaching_plans/fill' => 'teaching_plans#fill'
     root :to => redirect('/supervisor/lecturers')
